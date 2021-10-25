@@ -10,20 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_120651) do
+ActiveRecord::Schema.define(version: 2021_10_23_113406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
     t.string "body", null: false
-    t.boolean "correct", default: false
+    t.boolean "correct", default: false, null: false
     t.bigint "question_id"
-    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
-    t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -43,10 +41,12 @@ ActiveRecord::Schema.define(version: 2021_10_23_120651) do
   create_table "tests", force: :cascade do |t|
     t.string "title", null: false
     t.string "level", default: "Beginner"
+    t.bigint "user_id"
     t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_tests_on_category_id"
+    t.index ["user_id"], name: "index_tests_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -55,4 +55,8 @@ ActiveRecord::Schema.define(version: 2021_10_23_120651) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "answers", "questions"
+  add_foreign_key "questions", "tests"
+  add_foreign_key "tests", "categories"
+  add_foreign_key "tests", "users"
 end
