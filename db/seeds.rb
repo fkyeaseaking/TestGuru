@@ -13,7 +13,7 @@ users = User.create!(
     { email: "test3@example.com" },
   ]
 )
-tests = Test.create(
+tests = Test.create!(
   [
     { title: "Ruby", level: 1, author_id: users.sample.id, category_id: categories.sample.id },
     { title: "HTML", level: 2, author_id: users.sample.id, category_id: categories.sample.id  },
@@ -23,15 +23,32 @@ tests = Test.create(
   ]
 )
 
-questions = []
-for i in 1..5
-  questions << Question.create!(body: "question ##{i}", test_id: tests.sample.id)
-end
+questions = Question.create!(
+  [
+    { body: "question body", test_id: tests.sample.id },
+    { body: "question body", test_id: tests.sample.id },
+    { body: "question body", test_id: tests.sample.id },
+    { body: "question body", test_id: tests.sample.id },
+    { body: "question body", test_id: tests.sample.id },
+  ]
+)
 
-for i in 1..5
-  Answer.create!(body: "answer ##{i}", question_id: questions.sample.id)
-end
+answers = Answer.create!(
+  [
+    { body: "answer body", question_id: questions.sample.id },
+    { body: "answer body", question_id: questions.sample.id },
+    { body: "answer body", question_id: questions.sample.id },
+    { body: "answer body", question_id: questions.sample.id },
+    { body: "answer body", question_id: questions.sample.id },
+  ]
+)
 
-for i in 1..5 
-  Result.create!(user_id: users.sample.id, test_id: tests.sample.id)
-end
+results = Result.create!(
+  [
+    { user_id: users.sample.id, test_id: tests.sample.id },
+    { user_id: users.sample.id, test_id: tests.sample.id },
+    { user_id: users.sample.id, test_id: tests.sample.id },
+    { user_id: users.sample.id, test_id: tests.sample.id },
+    { user_id: users.sample.id, test_id: tests.sample.id },
+  ]
+)

@@ -1,11 +1,13 @@
 class Test < ApplicationRecord
-  belongs_to :category
-  has_many :results
-
   def self.find_by_category(category)
-    Test.joins(:category)
-        .where(categories: { title: category })
-        .order(title: :desc)
-        .pluck(:title)
+    titles = ActiveRecord::Base.connection.execute <<~SQL
+      SELECT tests.title 
+      FROM tests
+      INNER JOIN categories ON categories.id = tests.category_id
+      WHERE categories.title = '#{category}'
+      ORDER BY tests.title DESC
+    SQL
+
+    titles.values
   end
 end
