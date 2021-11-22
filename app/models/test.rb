@@ -17,7 +17,10 @@ class Test < ApplicationRecord
     joins(:category)
       .where(categories: { title: category })
       .order(title: :desc)
-      .pluck(:title)
   }
   scope :find_by_level, ->(level) { where(level: level) }
+
+  def self.find_titles_by_category(category)
+    find_by_category(category).pluck(:title)
+  end
 end
