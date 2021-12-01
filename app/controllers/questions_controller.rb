@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :find_test
-  before_action :find_question, only: %i[show destroy]
+  before_action :find_test, except: %i[show]
+  before_action :find_question, only: %i[show destroy show]
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -9,15 +9,19 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    render json: @test.questions.find(@question.id)
+    render json: @question
   end
 
   def new; end
 
   def create
-    question = @test.questions.create(question_params)
+    @question = @test.questions.build(question_params)
 
-    render plain: question.inspect
+    if @question.save
+      render plain: @question.inspect
+    else
+      render plain: "question wasn't created"
+    end
   end
 
   def destroy
