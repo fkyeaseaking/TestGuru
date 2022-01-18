@@ -4,10 +4,6 @@ class QuestionsController < ApplicationController
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
-  def index
-    @questions = @test.questions
-  end
-
   def show; end
 
   def new
@@ -38,7 +34,7 @@ class QuestionsController < ApplicationController
     @test = @question.test
     @question.destroy
 
-    redirect_to test_questions_path(@test)
+    redirect_to test_path(@test), notice: "Question deleted"
   end
 
   private
