@@ -1,5 +1,5 @@
 module QuestionsHelper
-  def year
+  def current_year
     Time.current.year
   end
 

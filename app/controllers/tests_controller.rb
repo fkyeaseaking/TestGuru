@@ -1,5 +1,5 @@
 class TestsController < ApplicationController
-  before_action :find_test, except: %i[index new create]
+  before_action :find_test, olny: %i[show update destroy]
 
   def index
     @tests = Test.all

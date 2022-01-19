@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :find_test, except: %i[show edit update destroy]
+  before_action :find_test, only: %i[new create]
   before_action :find_question, only: %i[show destroy edit update]
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -31,10 +31,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @test = @question.test
     @question.destroy
 
-    redirect_to test_path(@test), notice: "Question deleted"
+    redirect_to test_path(@question.test), notice: "Question deleted"
   end
 
   private
