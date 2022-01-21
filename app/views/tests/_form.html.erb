@@ -1,0 +1,21 @@
+<%= form_with model: @test, local: true do |f| %>
+  <%= render 'shared/errors', resource: @test %>
+
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <br>
+
+  <%= f.label :level %>
+  <%= f.number_field :level %>
+  <br>
+
+  <%= f.label :author_id %>
+  <%= f.collection_select :author_id, User.all, :id, :email, prompt: true %>
+  <br>
+
+  <%= f.label :category_id %>
+  <%= f.collection_select :category_id, Category.all, :id, :title, prompt: true %>
+  <br>
+
+  <%= f.submit %>
+<% end %>
